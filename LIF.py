@@ -15,15 +15,16 @@ def leaky_integragte_and_fire_model(Vnew,t):
     V = Vnew + (t/tau)*(-(Vnew - V_r) + (R*I_t))
     return V
 
-print("Step--------------------V--------------------Spike?")
+print(f"{'Step':<6} {'Voltage (V)':<18} {'Spike?'}")
+print("-" * 40)
 for _ in range(1,11):
     V_new = leaky_integragte_and_fire_model(V_rest,_)
     V_rest = V_new
     V_collections.append(V_new)
     if V_new>=V_th:
-        print(_,"--------------------",round(V_new,5),"---------------Yes")
+        print("{:<6} {:<20.5f} {:<6}".format(_, V_new,"Yes"))
     else:
-        print(_," --------------------",round(V_new,5),"---------------No")
+        print("{:<6} {:<20.5f} {:<6}".format(_, V_new,"No"))
 
 t = np.linspace(0,10,11)
 plt.plot(t,V_collections ,marker='o', linestyle='-', color='deeppink',linewidth=2.0)
